@@ -7,4 +7,4 @@ The programmer's club will be held once per month on Thursdays at 11.00 -
 Next meeting: **Thursday the 29th of January**
 
 Wiki with information on upcoming meetings and previous meetings can be found
-[here](https://github.com/DanielAndreasen/Programmers-Club.git).
+[here](https://github.com/DanielAndreasen/Programmers-Club/wiki).
