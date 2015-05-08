@@ -1,0 +1,285 @@
+%                                                                 aa.dem
+% AA vers. 8.2, LaTeX class for Astronomy & Astrophysics
+% demonstration file
+%                                                       (c) EDP Sciences
+%-----------------------------------------------------------------------
+%
+%\documentclass[referee]{aa} % for a referee version
+%\documentclass[onecolumn]{aa} % for a paper on 1 column  
+%\documentclass[longauth]{aa} % for the long lists of affiliations 
+%\documentclass[rnote]{aa} % for the research notes
+%\documentclass[letter]{aa} % for the letters 
+%\documentclass[bibyear]{aa} % if the references are not structured 
+% according to the author-year natbib style
+
+%
+\documentclass{aa}  
+
+%
+\usepackage{graphicx}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{txfonts}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+% To add links in your PDF file, use the package "hyperref"
+% with options according to your LaTeX or PDFLaTeX drivers.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{natbib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[pyfuture=none]{pythontex}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc} 
+
+
+\newcommand{\pytex}{Python\TeX}
+
+%
+\begin{document} 
+
+
+   \title{Python\TeX}
+
+   \subtitle{}
+
+   \author{João Faria
+          \inst{1}
+          }
+
+   \institute{Programmer's Club, Feb 26 2015}
+
+   \date{Received ...; accepted ....}
+
+% \abstract{}{}{}{}{} 
+% 5 {} token are mandatory
+ 
+  \abstract
+  % context heading (optional)
+  % {} leave it empty if necessary  
+   {To investigate the physical nature of the `nuc\-leated instability' of
+   proto giant planets, the stability of layers
+   in static, radiative gas spheres is analysed on the basis of Baker's
+   standard one-zone model.}
+  % aims heading (mandatory)
+   {It is shown that stability
+   depends only upon the equations of state, the opacities and the local
+   thermodynamic state in the layer. Stability and instability can
+   therefore be expressed in the form of stability equations of state
+   which are universal for a given composition.}
+  % methods heading (mandatory)
+   {The stability equations of state are
+   calculated for solar composition and are displayed in the domain
+   $-14 \leq \lg \rho / \mathrm{[g\, cm^{-3}]} \leq 0 $,
+   $ 8.8 \leq \lg e / \mathrm{[erg\, g^{-1}]} \leq 17.7$. These displays
+   may be
+   used to determine the one-zone stability of layers in stellar
+   or planetary structure models by directly reading off the value of
+   the stability equations for the thermodynamic state of these layers,
+   specified
+   by state quantities as density $\rho$, temperature $T$ or
+   specific internal energy $e$.
+   Regions of instability in the $(\rho,e)$-plane are described
+   and related to the underlying microphysical processes.}
+  % results heading (mandatory)
+   {Vibrational instability is found to be a common phenomenon
+   at temperatures lower than the second He ionisation
+   zone. The $\kappa$-mechanism is widespread under `cool'
+   conditions.}
+  % conclusions heading (optional), leave it empty if necessary 
+   {}
+
+   \keywords{giant planet formation --
+                $\kappa$-mechanism --
+                stability of gas spheres
+               }
+
+   \maketitle
+%
+%________________________________________________________________
+
+\section{Introduction}
+
+  This paper is about \pytex, which allows to enter Python code within a \LaTeX document, execute the code and access its output in the document.
+
+  Let us try a few simple commands:
+
+  \begin{itemize}
+    \item \pygment{latex}{\py} returns a string representation of its argument. \\ For example, \pygment{latex}{\py{2 + 4**2}} produces \py{2 + 4**2}, and \pygment{latex}{\py{'ABC'.lower()}} produces \py{'ABC'.lower()}.
+    \\
+
+    \item \pygment{latex}{\pyc} executes code. \\
+    For example, \pygment{latex}{\pyc{var = 2}} \pyc{var = 2} creates a variable, and then its value can be accessed later via \pygment{latex}{\py{var}}: \py{var}.\\
+    Another example: \pygment{latex}{\pyc{from numpy import pi}} \pyc{from numpy import pi} and later in the document \pygment{latex}{\py{pi}}: \py{pi}
+    \\
+
+    \item \pygment{latex}{\pyb} executes and typesets code.\\
+    For example, \pygment{latex}{\pyb{var = 2}} typesets \pyb{var = 2} in addition to creating the variable.
+  \end{itemize}
+
+  There are also a handful of environments
+
+  \begin{itemize}
+    \item \pygment{latex}{\begin{pycode}} code that is executed but not typeset
+    \item \pygment{latex}{\begin{pyverbatim}} code that is typeset but not executed
+    \item \pygment{latex}{\begin{pyblock}} code that is both executed and typeset
+  \end{itemize}
+
+  All commands and environments can be prepended with \pygment{latex}{\pylab} to import matplotlib's \textt{pylab} module, or with \pygment{latex}{\sympy} to import \textt{sympy}.
+  
+
+
+%__________________________________________________________________
+
+\section{Why is this useful?}
+
+  \subsection{To make tables automatically}
+
+    Table values can be filled in from Python and the \pygment{latex}{\pycode} environment used to include them in the document.
+
+\begin{pycode}
+print r'\begin{table}[h]'
+print r'\begin{tabular}{l|lll}'
+a, b, c = 12, 3, 6
+print r'name & a & b & c \\'
+print 'value & {} & {} & {}'.format(a,b,c)
+print r'\end{tabular}'
+print r'\end{table}'
+\end{pycode}
+
+
+  \subsection{To avoid copy/paste}
+
+    Copying and pasting values into the \LaTeX\ document can be tedious and error-prone. If the variables are set in Python, we can access them by their name.
+
+\begin{pygments}{text}
+\begin{pycode}
+import numpy as np
+stars = np.loadtxt('sample.rdb', dtype='S')
+nstars = d.size
+nstars_HD = len([s for s in stars if s.startswith('HD')])
+\end{pycode}
+\end{pygments}
+
+\begin{pycode}
+import numpy as np
+d = np.loadtxt('sample.rdb', dtype='S')
+nstars = d.size
+nstars_HD = len([star for star in d if star.startswith('HD')])
+\end{pycode}
+
+    There are \pygment{latex}{\py{nstars}}:\py{nstars} stars in our sample, \pygment{latex}{\py{nstars_HD}}:\py{nstars_HD} of which start with `HD'.
+
+
+  \subsection{For automatic calculus}
+
+    If we use SymPy we can have Python perform algebraic manipulations and then properly typeset the results.
+
+\begin{sympyblock}
+var('x, y, z')
+z = x + y
+\end{sympyblock}
+
+To typeset the variable $z$ in an equation, use \pygment{latex}{\sympy{z}}. 
+We set $z$ to $\sympy{z}$.
+
+Calculus becomes easy(ier):
+
+\begin{sympyblock}
+f = x**3 + cos(x)**5
+g = Integral(f, x)
+\end{sympyblock}
+
+The LHS of Eq. \ref{eq:sympy} was typeset with \pygment{latex}{\sympy{g}}. The integral is then evaluated and typeset with \pygment{latex}{\sympy{g.doit()}}
+
+\begin{equation} \label{eq:sympy}
+  \sympy{g}=\sympy{g.doit()}  
+\end{equation}
+
+
+It's easy to use arbitrary symbols in equations.
+
+\begin{sympyblock}
+phi = Symbol(r'\phi')
+h = Integral(exp(-phi**2), (phi, 0, oo))
+\end{sympyblock}
+
+\begin{equation} 
+  \sympy{h}=\sympy{h.doit()}
+\end{equation}
+
+  \subsection{To make reproducible papers}
+
+    If the final version of your paper is compiled with \pytex, you know for sure that the numerical results included in it are the exact ones coming out of your code.
+
+    Therefore, if you happen to publish your code, and someone tries to reproduce your paper, they will get the exact same answer.
+
+
+  \subsection{To include figures}
+
+    It's useful to have the code that created a figure, together with that figure.
+
+\begin{pylabblock}
+rc('text', usetex=True)
+rc('font', family='serif', size=10)
+rc('legend', fontsize=10.0)
+x = linspace(0, 10)
+figure(figsize=(4, 2.5))
+plot(x, sin(x), label='$\sin(x)$')
+xlabel(r'$x\mathrm{-axis}$')
+ylabel(r'$y\mathrm{-axis}$')
+legend(loc=4)
+savefig('myplot.pdf', bbox_inches='tight')
+\end{pylabblock}
+
+    Now we just have to load the \texttt{myplot.pdf} file and show it in Fig. \ref{fig:sine}.
+    
+    \begin{figure}
+    \centering
+    \includegraphics[width=\hsize]{myplot.pdf}
+      \caption{A sine function.}
+      \label{fig:sine}
+    \end{figure}
+
+    We could also create the figure in a separate file \texttt{makefigs.py} and assign it to a variable \texttt{fig1} and then use
+
+\begin{pygments}{python}
+\begin{pylabcode}
+execfile('makefigs.py')
+fig1.savefig('fig1.pdf', bbox_inches='tight')
+\end{pylabcode}
+\end{pygments}
+
+\begin{pylabcode}
+pytex.add_dependencies('makefigs.py')
+execfile('makefigs.py')
+fig1.savefig('fig1.pdf', bbox_inches='tight')
+pytex.add_created(['fig1.pdf'])
+\end{pylabcode}
+
+
+    \begin{figure}
+    \centering
+    \includegraphics[width=\hsize]{fig1.pdf}
+      \caption{A cosine function.}
+      \label{fig:cosine}
+    \end{figure}
+
+\section{dePython\TeX}
+
+  Journals don't really like \LaTeX\ files with weird commands in them. So there is a {\tt depythontex} command that can convert a Python\TeX\ document into a plain \LaTeX\ document. This does not change anything that was included from Python.
+
+
+
+%-------------------------------------------------------------------
+
+\begin{thebibliography}{}
+
+\bibitem{poore2013}
+  Geoffrey M. Poore,
+  \emph{Reproducible Documents with PythonTeX}.
+  Proceedings of the 12th Python in Science Conference, 78-84, 2013,
+  \href{http://conference.scipy.org/proceedings/scipy2013/poore.html}{http://conference.scipy.org/proceedings/scipy2013/poore.html}
+
+\end{thebibliography}
+
+\end{document}
