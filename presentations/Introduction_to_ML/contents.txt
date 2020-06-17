@@ -1,0 +1,1 @@
+The Jupyter Notebook used for the presentation is available at: https://github.com/tundeakins/Machine_Learning4Astronomy
