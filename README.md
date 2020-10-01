@@ -10,6 +10,8 @@ So far, we have had the following talks:
   * A gentle introduction to CUDA by José Correia. Presentation uploaded to [youtube](https://www.youtube.com/watch?v=R18OO5wMsds)
   * DIAMONDS - nested sampling Monte Carlo by Thibault Boulet. Presentation uploaded to [youtube](https://www.youtube.com/watch?v=_vwIU3vVX9I)
   * Beyond the Random Forest: ML ensemble classification methods for improved speed and accuracy by Andrew Humphrey; Notebook available [online](https://github.com/humphrey-and-the-machine/programmers-club-notebooks)
+  * A Fast, 2D Gaussian Process Method Based on Celerite: Applications to Transiting Exoplanet Discovery and Characterization, by Eduardo Cristo; Yet to occur
+
 
 Wiki with information on upcoming meetings and previous meetings can be found
 [here](https://github.com/DanielAndreasen/Programmers-Club/wiki).
